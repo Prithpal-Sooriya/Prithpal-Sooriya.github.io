@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Vibe Calorie</title>
+    
+    <!-- PWA -->
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#181818">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://unpkg.com/open-props"/>
+    <link rel="stylesheet" href="https://unpkg.com/open-props/normalize.min.css"/>
+    <link rel="stylesheet" href="./styles.css">
+
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥑</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        
+        <header>
+            <h1>Vibe Calorie</h1>
+            <div id="settings-area">
+                <!-- Settings button injected via JS or static -->
+                <button id="settings-btn" class="icon-btn" aria-label="Settings">⚙️</button>
+            </div>
+        </header>
+
+        <main id="main-content">
+            <!-- Loading -->
+            <div id="loading" class="view">
+                <p>Loading vibes...</p>
+            </div>
+
+            <!-- Onboarding -->
+            <div id="onboarding-view" class="view hidden">
+                <div class="card glass">
+                    <h2>Welcome</h2>
+                    <p>To start tracking, you need your own <strong>Google Gemini API Key</strong>.</p>
+                    <p class="tiny-text">It's free and your key is stored locally on your device.</p>
+                    
+                    <div class="input-group">
+                        <input type="password" id="api-key-input" placeholder="Paste API Key here" />
+                        <button id="save-key-btn" class="primary-btn">Start Vibin' ✨</button>
+                    </div>
+                    
+                    <details>
+                        <summary>How to get a key?</summary>
+                        <ol>
+                            <li>Go to <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a></li>
+                            <li>Click "Create API Key"</li>
+                            <li>Paste it above!</li>
+                        </ol>
+                    </details>
+                </div>
+            </div>
+
+            <!-- Tracker -->
+            <div id="tracker-view" class="view hidden">
+                <div id="feed" class="feed">
+                    <!-- Calorie items will be injected here -->
+                    <div class="empty-state">
+                        <div class="emoji">📸</div>
+                        <p>No vibes yet. Snap a meal!</p>
+                    </div>
+                </div>
+
+                <div class="fab-container">
+                    <button id="camera-btn" class="fab" aria-label="Add Meal">
+                        <span>+</span>
+                    </button>
+                    <!-- Hidden file input triggered by FAB -->
+                    <input type="file" id="camera-input" accept="image/*" capture="environment" hidden>
+                </div>
+            </div>
+
+            <!-- Settings View (Modal-like) -->
+            <dialog id="settings-dialog">
+                <form method="dialog">
+                    <h3>Settings</h3>
+                    <div class="settings-content">
+                        <label>
+                            API Key
+                            <input type="password" id="settings-api-key" placeholder="API Key" />
+                        </label>
+                        <button type="button" id="update-key-btn" class="secondary-btn">Update Key</button>
+                        <button type="button" id="delete-data-btn" class="danger-btn">Clear All Data</button>
+                    </div>
+                    <menu>
+                        <button value="close" class="text-btn">Close</button>
+                    </menu>
+                </form>
+            </dialog>
+
+            <!-- Item Detail Dialog -->
+            <dialog id="item-dialog">
+                <form method="dialog">
+                    <h3 id="detail-title">Item Name</h3>
+                    <div id="detail-content"></div>
+                    <menu>
+                        <button value="close" class="primary-btn">Cool</button>
+                    </menu>
+                </form>
+            </dialog>
+
+        </main>
+    </div>
+
+    <!-- App Logic -->
+    <script type="module" src="./app.js"></script>
+</body>
+</html>
